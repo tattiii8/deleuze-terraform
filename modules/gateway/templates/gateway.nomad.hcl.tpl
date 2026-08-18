@@ -2,11 +2,12 @@ job "deleuze-gateway" {
   datacenters = ["${datacenter}"]
   type        = "service"
 
-  group "ingress-group" {
+  group "gateway" {
     count = 1
 
     network {
       port "http" {
+        static = 8888
         to = 80
       }
     }
