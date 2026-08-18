@@ -1,0 +1,39 @@
+# 機密情報（パスワード・トークン）を含む環境変数スクリプトを除外
+tfenv.sh
+*.env
+*.env.*
+!*.env.example
+!tfenv.sh.example
+
+# ローカルステートファイル（ステート内に機密情報が平文で含まれるため除外）
+*.tfstate
+*.tfstate.*
+*.tfstate.backup
+
+
+crash.log
+crash.*.log
+
+# CLI 設定ファイル・変数値ファイル（万が一作成された場合の防御策）
+*.tfvars
+*.tfvars.json
+override.tf
+override.tf.json
+*_override.tf
+*_override.tf.json
+
+# Terraform 初期化・プラグインキャッシュディレクトリ
+.terraform/
+.terraform.lock.hcl
+
+
+# macOS
+.DS_Store
+
+# VSCode / JetBrains
+.vscode/
+.idea/
+
+# バックアップ・一時ファイル
+*.swp
+*~
