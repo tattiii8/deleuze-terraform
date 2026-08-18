@@ -14,7 +14,7 @@ job "deleuze-db" {
       driver = "docker"
 
       config {
-        image = "postgres:16-alpine"
+        image = "${ecr_registry}deleuze-db:latest"
         ports = ["db"]
         args  = ["-c", "log_statement=all"]
       }
@@ -42,7 +42,7 @@ job "deleuze-db" {
       driver = "docker"
 
       config {
-        image = "postgres:16-alpine"
+        image = "871950640338.dkr.ecr.ap-northeast-1.amazonaws.com/deleuze-db:latest"
         ports = ["db"]
         args  = ["-c", "log_statement=all"]
       }

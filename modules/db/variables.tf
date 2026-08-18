@@ -8,3 +8,7 @@ variable "auth_db_name" { type = string }
 variable "app_db_name" { type = string }
 variable "auth_db_port" { type = number }
 variable "app_db_port" { type = number }
+variable "ecr_registry" {
+  type        = string
+  description = "ECR registry URL/domain"
+}

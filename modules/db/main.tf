@@ -7,5 +7,6 @@ resource "nomad_job" "db" {
     app_db_name  = var.app_db_name
     auth_db_port = var.auth_db_port
     app_db_port  = var.app_db_port
+    ecr_registry = var.ecr_registry
   })
 }

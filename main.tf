@@ -26,7 +26,7 @@ locals {
 
 # 1. Database
 module "db" {
-  source       = "./modules/db"
+  source       = "././modules/db"
   datacenter   = var.datacenter
   db_user      = local.db_user
   db_password  = var.db_password
@@ -38,7 +38,7 @@ module "db" {
 
 # 2. Application API Services
 module "api" {
-  source                 = "./modules/api"
+  source                 = "././modules/api"
   datacenter             = var.datacenter
   ecr_registry           = local.ecr_registry
   image_tag              = var.image_tag
@@ -61,9 +61,9 @@ module "api" {
   depends_on = [module.db]
 }
 
-# 3. Gateway
+# 3. Gateway    
 module "gateway" {
-  source                  = "./modules/gateway"
+  source                  = "././modules/gateway"
   datacenter              = var.datacenter
   ecr_registry            = local.ecr_registry
   cloudflare_tunnel_token = var.cloudflare_tunnel_token
