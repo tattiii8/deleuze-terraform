@@ -34,6 +34,7 @@ module "db" {
   app_db_name  = local.app_db_name
   auth_db_port = local.auth_db_port
   app_db_port  = local.app_db_port
+  ecr_registry = local.ecr_registry
 }
 
 # 2. Application API Services

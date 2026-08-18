@@ -14,7 +14,7 @@ job "deleuze-db" {
       driver = "docker"
 
       config {
-        image = "${ecr_registry}deleuze-db:latest"
+        image = "${ecr_registry}deleuze-db:16-alpine"
         ports = ["db"]
         args  = ["-c", "log_statement=all"]
       }
