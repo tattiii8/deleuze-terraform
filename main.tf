@@ -1,4 +1,4 @@
-# terraform init -backend-config
+# terraform init -backend-config=tfbackend.conf
 
 terraform {
   required_version = ">= 1.5.0"
