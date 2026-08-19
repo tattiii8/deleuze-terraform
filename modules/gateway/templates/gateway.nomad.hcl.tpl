@@ -1,5 +1,5 @@
 job "deleuze-gateway" {
-  datacenters = ["${datacenter}"]
+  datacenters = ["dc1"]
   type        = "service"
 
   group "gateway" {
@@ -17,7 +17,7 @@ job "deleuze-gateway" {
       driver = "docker"
 
       config {
-        image = "${ecr_registry}/cloudflare/cloudflared:latest"
+        image = "871950640338.dkr.ecr.ap-northeast-1.amazonaws.com/cloudflare/cloudflared:latest"
         args  = [
           "tunnel",
           "--no-autoupdate",
@@ -46,7 +46,7 @@ EOF
       driver = "docker"
 
       config {
-        image = "${ecr_registry}/nginx:alpine"
+        image = "871950640338.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:alpine"
         ports = ["http"]
 
         volumes = [
@@ -74,20 +74,21 @@ server {
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
 
+    # proxy_pass の末尾スラッシュを削除し、プレフィックスパスを維持してバックエンドへ転送
     location /api/auth/ {
-        proxy_pass http://{{ .HOST_IP }}:{{ .AUTH_PORT }}/;
+        proxy_pass http://{{ .HOST_IP }}:{{ .AUTH_PORT }};
     }
 
     location /api/app/ {
-        proxy_pass http://{{ .HOST_IP }}:{{ .APP_PORT }}/;
+        proxy_pass http://{{ .HOST_IP }}:{{ .APP_PORT }};
     }
 
     location /api/mng/ {
-        proxy_pass http://{{ .HOST_IP }}:{{ .MNG_PORT }}/;
+        proxy_pass http://{{ .HOST_IP }}:{{ .MNG_PORT }};
     }
 
     location /api/drive/ {
-        proxy_pass http://{{ .HOST_IP }}:{{ .DRIVE_PORT }}/;
+        proxy_pass http://{{ .HOST_IP }}:{{ .DRIVE_PORT }};
     }
 }
 {{ end }}
