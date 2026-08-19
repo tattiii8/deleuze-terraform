@@ -16,5 +16,6 @@ resource "nomad_job" "api" {
     app_db_port            = var.app_db_port
     auth_external_url      = var.auth_external_url
     management_api_secret  = var.management_api_secret
+    enable_mng_auth        = var.enable_mng_auth
   })
 }

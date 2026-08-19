@@ -22,3 +22,9 @@ variable "management_api_secret" {
   type      = string
   sensitive = true
 }
+
+variable "enable_mng_auth" {
+  type        = bool
+  default     = true
+  description = "管理APIのワンタイムトークン認証を有効にするかどうか (true/false)"
+}
