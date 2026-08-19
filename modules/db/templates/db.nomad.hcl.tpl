@@ -19,10 +19,17 @@ job "deleuze-db" {
         args  = ["-c", "log_statement=all"]
       }
 
-      env {
-        POSTGRES_USER     = "${db_user}"
-        POSTGRES_PASSWORD = "${db_password}"
-        POSTGRES_DB       = "${auth_db_name}"
+      # 💡 Nomad Variables から環境変数を取得
+      template {
+        data = <<EOF
+{{ with nomadVar "nomad/jobs/deleuze-auth-db" }}
+{{ range $k, $v := . }}
+{{ $k }}="{{ $v }}"
+{{ end }}
+{{ end }}
+EOF
+        destination = "secrets/env"
+        env         = true
       }
     }
   }
@@ -47,10 +54,17 @@ job "deleuze-db" {
         args  = ["-c", "log_statement=all"]
       }
 
-      env {
-        POSTGRES_USER     = "${db_user}"
-        POSTGRES_PASSWORD = "${db_password}"
-        POSTGRES_DB       = "${app_db_name}"
+      # 💡 Nomad Variables から環境変数を取得
+      template {
+        data = <<EOF
+                {{ with nomadVar "nomad/jobs/deleuze-app-db" }}
+                {{ range $k, $v := . }}
+                {{ $k }}="{{ $v }}"
+                {{ end }}
+                {{ end }}
+                EOF
+        destination = "secrets/env"
+        env         = true
       }
     }
   }
