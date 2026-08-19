@@ -7,6 +7,8 @@ create_container.ps1
 !*.env.example
 !tfenv.sh.example
 
+tfbackend.conf
+
 # ローカルステートファイル（ステート内に機密情報が平文で含まれるため除外）
 *.tfstate
 *.tfstate.*
