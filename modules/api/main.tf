@@ -40,6 +40,18 @@ resource "nomad_variable" "mng" {
   }
 }
 
+resource "nomad_variable" "drive" {
+  path = "nomad/jobs/deleuze-drive"
+
+  items = {
+    ASPNETCORE_ENVIRONMENT               = var.aspnetcore_environment
+    ASPNETCORE_URLS                      = "http://+:${tostring(var.drive_port)}"
+    ConnectionStrings__DefaultConnection = "Host=${var.host_ip};Port=${tostring(var.drive_db_port)};Database=${var.drive_db_name};Username=${var.db_user};Password=${var.db_password}"
+    AUTH_EXTERNAL_URL                    = var.auth_external_url
+    AUTH_INTERNAL_URL                    = "http://${var.host_ip}:${tostring(var.auth_port)}"
+  }
+}
+
 # ==========================================
 # 2. Nomad Job の定義
 # ==========================================
@@ -78,4 +90,15 @@ resource "nomad_job" "deleuze-mng" {
   })
 
   depends_on = [nomad_variable.mng]
+}
+
+resource "nomad_job" "deleuze-drive" {
+  jobspec = templatefile("${path.module}/templates/deleuze-drive.nomad.hcl.tpl", {
+    datacenter   = var.datacenter
+    ecr_registry = var.ecr_registry
+    image_tag    = var.image_tag
+    drive_port   = var.drive_port
+  })
+
+  depends_on = [nomad_variable.drive]
 }

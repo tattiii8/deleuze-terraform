@@ -17,6 +17,21 @@ variable "app_db_name" { type = string }
 variable "auth_db_port" { type = number }
 variable "app_db_port" { type = number }
 
+variable "drive_port" {
+  type        = number
+  description = "Port number for deleuze-drive API"
+}
+
+variable "drive_db_name" {
+  type        = string
+  description = "Database name for deleuze-drive"
+}
+
+variable "drive_db_port" {
+  type        = number
+  description = "Database port for deleuze-drive"
+}
+
 variable "auth_external_url" { type = string }
 variable "management_api_secret" {
   type      = string
