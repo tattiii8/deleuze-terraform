@@ -15,18 +15,18 @@ provider "nomad" {
 }
 
 locals {
-  ecr_registry = "${var.aws_account_id}.dkr.ecr.${var.aws_region}.amazonaws.com"
-  auth_port      = 5001
-  app_port       = 5002
-  mng_port       = 5003
-  drive_port     = 5004
-  auth_db_port   = 5432
-  app_db_port    = 5433
-  drive_db_port  = 5433
-  auth_db_name   = "deleuze-auth"
-  app_db_name    = "deleuze-app"
-  drive_db_name  = "deleuze-drive" # deleuze-app から修正
-  db_user        = "deleuzeadmin"
+  ecr_registry  = "${var.aws_account_id}.dkr.ecr.${var.aws_region}.amazonaws.com"
+  auth_port     = 5001
+  app_port      = 5002
+  mng_port      = 5003
+  drive_port    = 5004
+  auth_db_port  = 5432
+  app_db_port   = 5433
+  drive_db_port = 5433
+  auth_db_name  = "deleuze-auth"
+  app_db_name   = "deleuze-app"
+  drive_db_name = "deleuze-drive" # deleuze-app から修正
+  db_user       = "deleuzeadmin"
 }
 
 # 1. Database
@@ -37,10 +37,10 @@ module "db" {
   db_password   = var.db_password
   auth_db_name  = local.auth_db_name
   app_db_name   = local.app_db_name
-  drive_db_name = local.drive_db_name 
+  drive_db_name = local.drive_db_name
   auth_db_port  = local.auth_db_port
   app_db_port   = local.app_db_port
-  drive_db_port = local.drive_db_port 
+  drive_db_port = local.drive_db_port
   ecr_registry  = local.ecr_registry
 }
 

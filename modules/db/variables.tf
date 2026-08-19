@@ -6,11 +6,10 @@ variable "db_password" {
 }
 variable "auth_db_name" { type = string }
 variable "app_db_name" { type = string }
-variable "drive_db_name" { type = string } # 追加
+
 
 variable "auth_db_port" { type = number }
 variable "app_db_port" { type = number }
-variable "drive_db_port" { type = number } # 追加
 
 variable "drive_db_name" {
   type        = string

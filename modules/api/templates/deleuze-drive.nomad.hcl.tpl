@@ -1,12 +1,12 @@
 job "deleuze-drive" {
-  datacenters = ["$${datacenter}"]
+  datacenters = ["${datacenter}"]
   type        = "service"
 
   group "api" {
     count = 1
 
     network {
-      port "http" { static = $${drive_port} }
+      port "http" { static = ${drive_port} }
     }
 
     volume "drive-data" {
@@ -25,19 +25,19 @@ job "deleuze-drive" {
       }
 
       config {
-        image      = "$${ecr_registry}/deleuze-drive:$${image_tag}"
+        image      = "${ecr_registry}/deleuze-drive:${image_tag}"
         ports      = ["http"]
         force_pull = true
       }
 
       template {
         data = <<EOF
-                {{ with nomadVar "nomad/jobs/deleuze-drive" }}
-                {{ range $k, $v := . }}
-                {{ $k }}="{{ $v }}"
-                {{ end }}
-                {{ end }}
-                EOF
+{{ with nomadVar "nomad/jobs/deleuze-drive" }}
+{{ range $k, $v := . }}
+{{ $k }}="{{ $v }}"
+{{ end }}
+{{ end }}
+EOF
         destination = "secrets/env"
         env         = true
       }

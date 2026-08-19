@@ -1,4 +1,4 @@
-# 1-1. 認証用 DB
+# 1-1.  DB
 resource "nomad_variable" "auth_db" {
   path = "nomad/jobs/deleuze-auth-db"
 
@@ -9,7 +9,7 @@ resource "nomad_variable" "auth_db" {
   }
 }
 
-# 1-2. アプリ用 DB
+# 1-2.  DB
 resource "nomad_variable" "app_db" {
   path = "nomad/jobs/deleuze-app-db"
 
@@ -20,7 +20,7 @@ resource "nomad_variable" "app_db" {
   }
 }
 
-# 1-3. ドライブ用 DB（追加）
+# 1-3.  DB
 resource "nomad_variable" "drive_db" {
   path = "nomad/jobs/deleuze-drive-db"
 
@@ -37,12 +37,12 @@ resource "nomad_job" "db" {
     ecr_registry  = var.ecr_registry
     auth_db_port  = var.auth_db_port
     app_db_port   = var.app_db_port
-    drive_db_port = var.drive_db_port # 追加
+    drive_db_port = var.drive_db_port
   })
 
   depends_on = [
     nomad_variable.auth_db,
     nomad_variable.app_db,
-    nomad_variable.drive_db # 追加
+    nomad_variable.drive_db
   ]
 }
