@@ -37,6 +37,7 @@ resource "nomad_variable" "mng" {
     ConnectionStrings__AppConnection  = "Host=${var.host_ip};Port=${tostring(var.app_db_port)};Database=${var.app_db_name};Username=${var.db_user};Password=${var.db_password}"
     MANAGEMENT_API_SECRET             = var.management_api_secret
     ENABLE_MNG_AUTH                   = tostring(var.enable_mng_auth)
+    Services__Drive__InternalApiUrl   = "http://${var.host_ip}:${tostring(var.drive_port)}"
   }
 }
 
@@ -87,6 +88,7 @@ resource "nomad_job" "deleuze-mng" {
     ecr_registry = var.ecr_registry
     image_tag    = var.image_tag
     mng_port     = var.mng_port
+    drive_port   = var.drive_port
   })
 
   depends_on = [nomad_variable.mng]

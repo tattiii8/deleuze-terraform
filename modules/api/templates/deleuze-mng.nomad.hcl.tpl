@@ -20,12 +20,14 @@ job "deleuze-mng" {
 
       template {
         data = <<EOF
-                {{ with nomadVar "nomad/jobs/deleuze-mng" }}
-                {{ range $k, $v := . }}
-                {{ $k }}="{{ $v }}"
-                {{ end }}
-                {{ end }}
-                EOF
+{{ with nomadVar "nomad/jobs/deleuze-mng" }}
+{{ range $k, $v := . }}
+{{ $k }}="{{ $v }}"
+{{ end }}
+{{ end }}
+# 💡 Drive サービスの内部プロビジョニング用 URL を追加
+Services__Drive__InternalApiUrl="http://{{ env "attr.unique.network.ip-address" }}:${drive_port}"
+EOF
         destination = "secrets/env"
         env         = true
       }
