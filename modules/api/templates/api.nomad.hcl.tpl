@@ -80,8 +80,8 @@ job "deleuze-api" {
         
         ConnectionStrings__AuthConnection = "Host=${host_ip};Port=${auth_db_port};Database=${auth_db_name};Username=${db_user};Password=${db_password}"
         ConnectionStrings__AppConnection  = "Host=${host_ip};Port=${app_db_port};Database=${app_db_name};Username=${db_user};Password=${db_password}"
-        MANAGEMENT_API_SECRET              = "${management_api_secret}"
-        ENABLE_MNG_AUTH       = "${enable_mng_auth}"
+        MANAGEMENT_API_SECRET             = "${management_api_secret}"
+        ENABLE_MNG_AUTH                   = "${enable_mng_auth}"
       }
     }
   }

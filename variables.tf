@@ -50,3 +50,9 @@ variable "aspnetcore_environment" {
   type        = string
   description = "ASPNETCORE_ENVIRONMENT setting (e.g. Development, Production)"
 }
+
+variable "enable_mng_auth" {
+  type        = bool
+  default     = true
+  description = "管理APIのワンタイムトークン認証を有効にするかどうか (true/false)"
+}
