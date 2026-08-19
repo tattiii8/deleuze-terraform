@@ -60,6 +60,7 @@ module "api" {
 
   auth_external_url     = "https://deleuze.lesure.net/api/auth"
   management_api_secret = var.management_api_secret
+  enable_mng_auth        = var.enable_mng_auth
 
   depends_on = [module.db]
 }
