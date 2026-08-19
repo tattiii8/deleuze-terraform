@@ -22,7 +22,7 @@ locals {
   drive_port    = 5004
   auth_db_port  = 5432
   app_db_port   = 5433
-  drive_db_port = 5433
+  drive_db_port = 5434
   auth_db_name  = "deleuze-auth"
   app_db_name   = "deleuze-app"
   drive_db_name = "deleuze-drive" # deleuze-app から修正
