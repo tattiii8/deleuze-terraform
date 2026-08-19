@@ -9,7 +9,6 @@ job "deleuze-drive" {
       port "http" { static = $${drive_port} }
     }
 
-    # ストレージ永続化用のホストボリューム設定 (Nomad Client側の設定と一致させる)
     volume "drive-data" {
       type      = "host"
       read_only = false
