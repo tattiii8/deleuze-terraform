@@ -25,7 +25,6 @@ job "deleuze-gateway" {
         ]
       }
 
-      # 💡 Nomad Variables からトンネルトークンを取得して環境変数として注入
       template {
         data = <<EOF
 {{ with nomadVar "nomad/jobs/deleuze-gateway" }}
@@ -55,39 +54,44 @@ EOF
         ]
       }
 
-      # 💡 Nomad Variables の参照から Nginx 設定ファイルを動的レンダリング
       template {
         data = <<EOF
-                  {{ with nomadVar "nomad/jobs/deleuze-gateway" }}
-                  server {
-                      listen 80;
-                      server_name _;
+{{ with nomadVar "nomad/jobs/deleuze-gateway" }}
+server {
+    listen 80;
+    server_name _;
 
-                      real_ip_header CF-Connecting-IP;
+    client_max_body_size 500M;
 
-                      proxy_set_header Host $host;
-                      proxy_set_header X-Real-IP $remote_addr;
-                      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-                      proxy_set_header X-Forwarded-Proto $scheme;
+    real_ip_header CF-Connecting-IP;
 
-                      proxy_http_version 1.1;
-                      proxy_set_header Upgrade $http_upgrade;
-                      proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-Forwarded-Proto $scheme;
 
-                      location /api/auth/ {
-                          proxy_pass http://{{ .HOST_IP }}:{{ .AUTH_PORT }}/;
-                      }
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
 
-                      location /api/app/ {
-                          proxy_pass http://{{ .HOST_IP }}:{{ .APP_PORT }}/;
-                      }
+    location /api/auth/ {
+        proxy_pass http://{{ .HOST_IP }}:{{ .AUTH_PORT }}/;
+    }
 
-                      location /api/mng/ {
-                          proxy_pass http://{{ .HOST_IP }}:{{ .MNG_PORT }}/;
-                      }
-                  }
-                  {{ end }}
-                  EOF
+    location /api/app/ {
+        proxy_pass http://{{ .HOST_IP }}:{{ .APP_PORT }}/;
+    }
+
+    location /api/mng/ {
+        proxy_pass http://{{ .HOST_IP }}:{{ .MNG_PORT }}/;
+    }
+
+    location /api/drive/ {
+        proxy_pass http://{{ .HOST_IP }}:{{ .DRIVE_PORT }}/;
+    }
+}
+{{ end }}
+EOF
         destination = "local/default.conf"
       }
 

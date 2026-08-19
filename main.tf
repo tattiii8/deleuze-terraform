@@ -83,6 +83,7 @@ module "gateway" {
   auth_port               = local.auth_port
   app_port                = local.app_port
   mng_port                = local.mng_port
+  drive_port              =  local.drive_port
 
   depends_on = [module.api]
 }
