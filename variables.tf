@@ -56,3 +56,26 @@ variable "enable_mng_auth" {
   default     = true
   description = "管理APIのワンタイムトークン認証を有効にするかどうか (true/false)"
 }
+
+variable "aws_region" {
+  type        = string
+  default     = "ap-northeast-1"
+  description = "AWS リージョン"
+}
+
+variable "s3_bucket_name" {
+  type        = string
+  description = "Deleuze Drive 用の S3 バケット名"
+}
+
+variable "aws_access_key_id" {
+  type        = string
+  sensitive   = true
+  description = "S3 アクセス用の AWS Access Key ID"
+}
+
+variable "aws_secret_access_key" {
+  type        = string
+  sensitive   = true
+  description = "S3 アクセス用の AWS Secret Access Key"
+}

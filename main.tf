@@ -70,6 +70,11 @@ module "api" {
   management_api_secret = var.management_api_secret
   enable_mng_auth       = var.enable_mng_auth
 
+  s3_bucket_name          = var.s3_bucket_name
+  aws_region              = var.aws_region
+  aws_access_key_id       = var.aws_access_key_id
+  aws_secret_access_key   = var.aws_secret_access_key
+
   depends_on = [module.db]
 }
 
