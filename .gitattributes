@@ -1,0 +1,4 @@
+* text=auto eol=lf
+*.tf text eol=lf
+*.nomad text eol=lf
+*.hcl text eol=lf
