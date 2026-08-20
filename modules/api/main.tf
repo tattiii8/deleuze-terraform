@@ -50,6 +50,10 @@ resource "nomad_variable" "drive" {
     ConnectionStrings__DefaultConnection = "Host=${var.host_ip};Port=${tostring(var.drive_db_port)};Database=${var.drive_db_name};Username=${var.db_user};Password=${var.db_password}"
     AUTH_EXTERNAL_URL                    = var.auth_external_url
     AUTH_INTERNAL_URL                    = "http://${var.host_ip}:${tostring(var.auth_port)}"
+    AWS__Region                          = var.aws_region
+    AWS__BucketName                      = var.s3_bucket_name
+    AWS_ACCESS_KEY_ID                    = var.aws_access_key_id
+    AWS_SECRET_ACCESS_KEY                = var.aws_secret_access_key
   }
 }
 
