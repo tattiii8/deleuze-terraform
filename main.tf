@@ -23,6 +23,7 @@ locals {
   auth_db_port  = 5432
   app_db_port   = 5433
   drive_db_port = 5434
+  mng_front_port = 8891
   auth_db_name  = "deleuze-auth"
   app_db_name   = "deleuze-app"
   drive_db_name = "deleuze-drive" # deleuze-app から修正
@@ -89,6 +90,7 @@ module "gateway" {
   app_port                = local.app_port
   mng_port                = local.mng_port
   drive_port              =  local.drive_port
+  mng_front_port          =  local.mng_front_port
 
   depends_on = [module.api]
 }

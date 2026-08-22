@@ -90,6 +90,10 @@ server {
     location /api/drive/ {
         proxy_pass http://{{ .HOST_IP }}:{{ .DRIVE_PORT }};
     }
+
+    location /mng/ {
+        proxy_pass http://{{ .HOST_IP }}:{{ .MNG_FRONT_PORT }};
+    }
 }
 {{ end }}
 EOF

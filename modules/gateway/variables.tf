@@ -9,3 +9,5 @@ variable "auth_port" { type = number }
 variable "app_port" { type = number }
 variable "mng_port" { type = number }
 variable "drive_port" { type = number }
+variable "mng_front_port" { type = number }
+
