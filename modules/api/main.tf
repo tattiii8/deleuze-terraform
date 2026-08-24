@@ -11,7 +11,7 @@ resource "nomad_variable" "auth" {
     ASPNETCORE_URLS                      = "http://+:${tostring(var.auth_port)}"
     ConnectionStrings__DefaultConnection = "Host=${var.host_ip};Port=${tostring(var.auth_db_port)};Database=${var.auth_db_name};Username=${var.db_user};Password=${var.db_password}"
     AUTH_EXTERNAL_URL                    = var.auth_external_url
-    AUTH_INTERNAL_URL                    = "http://${var.host_ip}:${tostring(var.auth_port)}"
+    AUTH_INTERNAL_URL                    = var.auth_internal_url
   }
 }
 
@@ -23,7 +23,7 @@ resource "nomad_variable" "app" {
     ASPNETCORE_URLS                  = "http://+:${tostring(var.app_port)}"
     ConnectionStrings__AppConnection = "Host=${var.host_ip};Port=${tostring(var.app_db_port)};Database=${var.app_db_name};Username=${var.db_user};Password=${var.db_password}"
     AUTH_EXTERNAL_URL                = var.auth_external_url
-    AUTH_INTERNAL_URL                = "http://${var.host_ip}:${tostring(var.auth_port)}"
+    AUTH_INTERNAL_URL                = var.auth_internal_url
   }
 }
 
@@ -49,7 +49,7 @@ resource "nomad_variable" "drive" {
     ASPNETCORE_URLS                      = "http://+:${tostring(var.drive_port)}"
     ConnectionStrings__DefaultConnection = "Host=${var.host_ip};Port=${tostring(var.drive_db_port)};Database=${var.drive_db_name};Username=${var.db_user};Password=${var.db_password}"
     AUTH_EXTERNAL_URL                    = var.auth_external_url
-    AUTH_INTERNAL_URL                    = "http://${var.host_ip}:${tostring(var.auth_port)}"
+    AUTH_INTERNAL_URL                    = var.auth_internal_url
     AWS__Region                          = var.aws_region
     AWS__BucketName                      = var.s3_bucket_name
     AWS_ACCESS_KEY_ID                    = var.aws_access_key_id

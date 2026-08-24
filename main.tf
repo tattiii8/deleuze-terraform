@@ -68,6 +68,7 @@ module "api" {
   drive_db_port = local.drive_db_port # 追加
 
   auth_external_url     = "https://deleuze.lesure.net/api/auth"
+  auth_internal_url     = "http://192.168.8.112:5001/api/auth"
   management_api_secret = var.management_api_secret
   enable_mng_auth       = var.enable_mng_auth
 

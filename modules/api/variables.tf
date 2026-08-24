@@ -33,6 +33,9 @@ variable "drive_db_port" {
 }
 
 variable "auth_external_url" { type = string }
+variable "auth_internal_url" { type = string }
+
+
 variable "management_api_secret" {
   type      = string
   sensitive = true
