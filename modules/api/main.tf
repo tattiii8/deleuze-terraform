@@ -15,18 +15,6 @@ resource "nomad_variable" "auth" {
   }
 }
 
-resource "nomad_variable" "app" {
-  path = "nomad/jobs/deleuze-app"
-
-  items = {
-    ASPNETCORE_ENVIRONMENT           = var.aspnetcore_environment
-    ASPNETCORE_URLS                  = "http://+:${tostring(var.app_port)}"
-    ConnectionStrings__AppConnection = "Host=${var.host_ip};Port=${tostring(var.app_db_port)};Database=${var.app_db_name};Username=${var.db_user};Password=${var.db_password}"
-    AUTH_EXTERNAL_URL                = var.auth_external_url
-    AUTH_INTERNAL_URL                = var.auth_internal_url
-  }
-}
-
 resource "nomad_variable" "mng" {
   path = "nomad/jobs/deleuze-mng"
 
@@ -34,7 +22,6 @@ resource "nomad_variable" "mng" {
     ASPNETCORE_ENVIRONMENT             = var.aspnetcore_environment
     ASPNETCORE_URLS                    = "http://+:${tostring(var.mng_port)}"
     ConnectionStrings__AuthConnection = "Host=${var.host_ip};Port=${tostring(var.auth_db_port)};Database=${var.auth_db_name};Username=${var.db_user};Password=${var.db_password}"
-    ConnectionStrings__AppConnection  = "Host=${var.host_ip};Port=${tostring(var.app_db_port)};Database=${var.app_db_name};Username=${var.db_user};Password=${var.db_password}"
     MANAGEMENT_API_SECRET             = var.management_api_secret
     ENABLE_MNG_AUTH                   = tostring(var.enable_mng_auth)
     Services__Drive__InternalApiUrl   = "http://${var.host_ip}:${tostring(var.drive_port)}"
@@ -71,18 +58,6 @@ resource "nomad_job" "deleuze-auth" {
   })
 
   depends_on = [nomad_variable.auth]
-}
-
-# 2. App サービス
-resource "nomad_job" "deleuze-app" {
-  jobspec = templatefile("${path.module}/templates/deleuze-app.nomad.hcl.tpl", {
-    datacenter   = var.datacenter
-    ecr_registry = var.ecr_registry
-    image_tag    = var.image_tag
-    app_port     = var.app_port
-  })
-
-  depends_on = [nomad_variable.app]
 }
 
 # 3. Management サービス

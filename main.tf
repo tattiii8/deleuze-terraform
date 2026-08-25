@@ -15,18 +15,18 @@ provider "nomad" {
 }
 
 locals {
-  ecr_registry  = "${var.aws_account_id}.dkr.ecr.${var.aws_region}.amazonaws.com"
-  auth_port     = 5001
-  mng_port      = 5003
-  drive_port    = 5004
-  auth_db_port  = 5432
-  mng_db_port   = 5433
-  drive_db_port = 5434
+  ecr_registry   = "${var.aws_account_id}.dkr.ecr.${var.aws_region}.amazonaws.com"
+  auth_port      = 5001
+  mng_port       = 5003
+  drive_port     = 5004
+  auth_db_port   = 5432
+  mng_db_port    = 5433
+  drive_db_port  = 5434
   mng_front_port = 8891
-  auth_db_name  = "deleuze-auth"
-  mng_db_name   = "deleuze-mng"
-  drive_db_name = "deleuze-drive" # deleuze-app から修正
-  db_user       = "deleuzeadmin"
+  auth_db_name   = "deleuze-auth"
+  mng_db_name    = "deleuze-mng"
+  drive_db_name  = "deleuze-drive" # deleuze-app から修正
+  db_user        = "deleuzeadmin"
 }
 
 # 1. Database
@@ -55,7 +55,6 @@ module "api" {
   auth_port              = local.auth_port
   mng_port               = local.mng_port
   drive_port             = local.drive_port # 追加
-
   db_user       = local.db_user
   db_password   = var.db_password
   auth_db_name  = local.auth_db_name
@@ -70,10 +69,10 @@ module "api" {
   management_api_secret = var.management_api_secret
   enable_mng_auth       = var.enable_mng_auth
 
-  s3_bucket_name          = var.s3_bucket_name
-  aws_region              = var.aws_region
-  aws_access_key_id       = var.aws_access_key_id
-  aws_secret_access_key   = var.aws_secret_access_key
+  s3_bucket_name        = var.s3_bucket_name
+  aws_region            = var.aws_region
+  aws_access_key_id     = var.aws_access_key_id
+  aws_secret_access_key = var.aws_secret_access_key
 
   depends_on = [module.db]
 }
@@ -87,8 +86,8 @@ module "gateway" {
   host_ip                 = var.host_ip
   auth_port               = local.auth_port
   mng_port                = local.mng_port
-  drive_port              =  local.drive_port
-  mng_front_port          =  local.mng_front_port
+  drive_port              = local.drive_port
+  mng_front_port          = local.mng_front_port
 
   depends_on = [module.api]
 }
