@@ -21,7 +21,7 @@ resource "nomad_variable" "mng" {
   items = {
     ASPNETCORE_ENVIRONMENT             = var.aspnetcore_environment
     ASPNETCORE_URLS                    = "http://+:${tostring(var.mng_port)}"
-    ConnectionStrings__AuthConnection = "Host=${var.host_ip};Port=${tostring(mng.auth_db_port)};Database=${var.mng_db_name};Username=${var.db_user};Password=${var.db_password}"
+    ConnectionStrings__AuthConnection = "Host=${var.host_ip};Port=${tostring(var.mng_db_port)};Database=${var.mng_db_name};Username=${var.db_user};Password=${var.db_password}"
     MANAGEMENT_API_SECRET             = var.management_api_secret
     ENABLE_MNG_AUTH                   = tostring(var.enable_mng_auth)
     Services__Drive__InternalApiUrl   = "http://${var.host_ip}:${tostring(var.drive_port)}"
