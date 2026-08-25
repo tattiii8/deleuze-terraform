@@ -17,15 +17,14 @@ provider "nomad" {
 locals {
   ecr_registry  = "${var.aws_account_id}.dkr.ecr.${var.aws_region}.amazonaws.com"
   auth_port     = 5001
-  app_port      = 5002
   mng_port      = 5003
   drive_port    = 5004
   auth_db_port  = 5432
-  app_db_port   = 5433
+  mng_db_port   = 5433
   drive_db_port = 5434
   mng_front_port = 8891
   auth_db_name  = "deleuze-auth"
-  app_db_name   = "deleuze-app"
+  mng_db_name   = "deleuze-mng"
   drive_db_name = "deleuze-drive" # deleuze-app から修正
   db_user       = "deleuzeadmin"
 }
@@ -37,10 +36,10 @@ module "db" {
   db_user       = local.db_user
   db_password   = var.db_password
   auth_db_name  = local.auth_db_name
-  app_db_name   = local.app_db_name
+  mng_db_name   = local.mng_db_name
   drive_db_name = local.drive_db_name
   auth_db_port  = local.auth_db_port
-  app_db_port   = local.app_db_port
+  mng_db_port   = local.mng_db_port
   drive_db_port = local.drive_db_port
   ecr_registry  = local.ecr_registry
 }
@@ -54,17 +53,16 @@ module "api" {
   aspnetcore_environment = var.aspnetcore_environment
   host_ip                = var.host_ip
   auth_port              = local.auth_port
-  app_port               = local.app_port
   mng_port               = local.mng_port
   drive_port             = local.drive_port # 追加
 
   db_user       = local.db_user
   db_password   = var.db_password
   auth_db_name  = local.auth_db_name
-  app_db_name   = local.app_db_name
+  mng_db_name   = local.mng_db_name
   drive_db_name = local.drive_db_name # 追加
   auth_db_port  = local.auth_db_port
-  app_db_port   = local.app_db_port
+  mng_db_port   = local.mng_db_port
   drive_db_port = local.drive_db_port # 追加
 
   auth_external_url     = "https://deleuze.lesure.net/api/auth"
@@ -88,7 +86,6 @@ module "gateway" {
   cloudflare_tunnel_token = var.cloudflare_tunnel_token
   host_ip                 = var.host_ip
   auth_port               = local.auth_port
-  app_port                = local.app_port
   mng_port                = local.mng_port
   drive_port              =  local.drive_port
   mng_front_port          =  local.mng_front_port
