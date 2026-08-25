@@ -8,6 +8,7 @@ terraform {
       version = "~> 2.1"
     }
   }
+  backend "s3" {}
 }
 
 provider "nomad" {
