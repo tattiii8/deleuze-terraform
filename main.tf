@@ -55,14 +55,14 @@ module "api" {
   auth_port              = local.auth_port
   mng_port               = local.mng_port
   drive_port             = local.drive_port # 追加
-  db_user       = local.db_user
-  db_password   = var.db_password
-  auth_db_name  = local.auth_db_name
-  mng_db_name   = local.mng_db_name
-  drive_db_name = local.drive_db_name # 追加
-  auth_db_port  = local.auth_db_port
-  mng_db_port   = local.mng_db_port
-  drive_db_port = local.drive_db_port # 追加
+  db_user                = local.db_user
+  db_password            = var.db_password
+  auth_db_name           = local.auth_db_name
+  mng_db_name            = local.mng_db_name
+  drive_db_name          = local.drive_db_name # 追加
+  auth_db_port           = local.auth_db_port
+  mng_db_port            = local.mng_db_port
+  drive_db_port          = local.drive_db_port # 追加
 
   auth_external_url     = "https://deleuze.lesure.net/api/auth"
   auth_internal_url     = "http://192.168.8.112:5001/api/auth"
