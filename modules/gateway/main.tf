@@ -7,7 +7,6 @@ resource "nomad_variable" "gateway" {
     HOST_IP                 = var.host_ip
     MNG_FRONT_PORT          = tostring(var.mng_front_port)
     AUTH_PORT               = tostring(var.auth_port)
-    APP_PORT                = tostring(var.app_port)
     MNG_PORT                = tostring(var.mng_port)
     DRIVE_PORT              = tostring(var.drive_port)
   }

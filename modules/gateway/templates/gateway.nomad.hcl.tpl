@@ -79,10 +79,6 @@ server {
         proxy_pass http://{{ .HOST_IP }}:{{ .AUTH_PORT }};
     }
 
-    location /api/app/ {
-        proxy_pass http://{{ .HOST_IP }}:{{ .APP_PORT }};
-    }
-
     location /api/mng/ {
         proxy_pass http://{{ .HOST_IP }}:{{ .MNG_PORT }};
     }

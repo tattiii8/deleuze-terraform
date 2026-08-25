@@ -2,12 +2,27 @@ job "deleuze-db" {
   datacenters = ["${datacenter}"]
   type        = "service"
 
+  # =========================================================
+  # Deleuze Auth DB
+  #
+  # 認証サービス専用DB
+  #
+  # 将来的に:
+  #   auth_flaubert
+  #   auth_balzac
+  #   ...
+  #
+  # を deleuze-auth が管理する。
+  # =========================================================
   group "deleuze-auth" {
     count = 1
 
     network {
       mode = "bridge"
-      port "db" { static = ${auth_db_port} }
+
+      port "db" {
+        static = ${auth_db_port}
+      }
     }
 
     task "deleuze-auth" {
@@ -27,24 +42,40 @@ job "deleuze-db" {
 {{ end }}
 {{ end }}
 EOF
+
         destination = "secrets/env"
         env         = true
       }
     }
   }
 
-  group "deleuze-app" {
+
+  # =========================================================
+  # Deleuze Management DB
+  #
+  # 管理サービス専用DB
+  #
+  # 将来的に:
+  #   public.Tenants
+  #   public.Services
+  #   public.TenantServices
+  #   ...
+  #
+  # を deleuze-mng が管理する。
+  # =========================================================
+  group "deleuze-mng" {
     count = 1
 
     network {
       mode = "bridge"
+
       port "db" {
-        static = ${app_db_port}
+        static = ${mng_db_port}
         to     = 5432
       }
     }
 
-    task "deleuze-app" {
+    task "deleuze-mng" {
       driver = "docker"
 
       config {
@@ -55,23 +86,38 @@ EOF
 
       template {
         data = <<EOF
-{{ with nomadVar "nomad/jobs/deleuze-app-db" }}
+{{ with nomadVar "nomad/jobs/deleuze-mng-db" }}
 {{ range $k, $v := . }}
 {{ $k }}="{{ $v }}"
 {{ end }}
 {{ end }}
 EOF
+
         destination = "secrets/env"
         env         = true
       }
     }
   }
 
+
+  # =========================================================
+  # Deleuze Drive DB
+  #
+  # ファイル管理サービス専用DB
+  #
+  # 将来的に:
+  #   drive_flaubert
+  #   drive_balzac
+  #   ...
+  #
+  # を deleuze-drive が管理する。
+  # =========================================================
   group "deleuze-drive" {
     count = 1
 
     network {
       mode = "bridge"
+
       port "db" {
         static = ${drive_db_port}
         to     = 5432
@@ -95,6 +141,7 @@ EOF
 {{ end }}
 {{ end }}
 EOF
+
         destination = "secrets/env"
         env         = true
       }
