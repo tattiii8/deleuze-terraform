@@ -12,6 +12,10 @@ resource "nomad_variable" "auth" {
     ConnectionStrings__DefaultConnection = "Host=${var.host_ip};Port=${tostring(var.auth_db_port)};Database=${var.auth_db_name};Username=${var.db_user};Password=${var.db_password}"
     AUTH_EXTERNAL_URL                    = var.auth_external_url
     AUTH_INTERNAL_URL                    = var.auth_internal_url
+    Jwt__Key                             = var.jwt_key
+    Jwt__Issuer                          = var.jwt_issuer
+    Jwt__Audience                        = var.jwt_audience
+    Jwt__ExpiresMinutes                  = tostring(var.jwt_expires_minutes)
   }
 }
 

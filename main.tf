@@ -74,6 +74,10 @@ module "api" {
   aws_region            = var.aws_region
   aws_access_key_id     = var.aws_access_key_id
   aws_secret_access_key = var.aws_secret_access_key
+    jwt_key             = var.jwt_key
+  jwt_issuer            = var.jwt_issuer
+  jwt_audience          = var.jwt_audience
+  jwt_expires_minutes   = var.jwt_expires_minutes
 
   depends_on = [module.db]
 }

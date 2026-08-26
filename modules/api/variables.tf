@@ -68,3 +68,20 @@ variable "aws_secret_access_key" {
   sensitive   = true
   description = "S3 アクセス用の AWS Secret Access Key"
 }
+
+variable "jwt_key" {
+  type      = string
+  sensitive = true
+}
+
+variable "jwt_issuer" {
+  type = string
+}
+
+variable "jwt_audience" {
+  type = string
+}
+
+variable "jwt_expires_minutes" {
+  type = number
+}
