@@ -9,7 +9,7 @@ resource "nomad_variable" "auth" {
   items = {
     ASPNETCORE_ENVIRONMENT               = var.aspnetcore_environment
     ASPNETCORE_URLS                      = "http://+:${tostring(var.auth_port)}"
-    ConnectionStrings__DefaultConnection = "Host=${var.host_ip};Port=${tostring(var.auth_db_port)};Database=${var.auth_db_name};Username=${var.db_user};Password=${var.db_password}"
+    ConnectionStrings__authConnection    = "Host=${var.host_ip};Port=${tostring(var.auth_db_port)};Database=${var.auth_db_name};Username=${var.db_user};Password=${var.db_password}"
     AUTH_EXTERNAL_URL                    = var.auth_external_url
     AUTH_INTERNAL_URL                    = var.auth_internal_url
     Jwt__Key                             = var.jwt_key
