@@ -1,4 +1,4 @@
-job "deleuze-mng" {
+job "flaubert-drive" {
   datacenters = ["${datacenter}"]
   type        = "service"
 
@@ -6,27 +6,25 @@ job "deleuze-mng" {
     count = 1
 
     network {
-      port "http" { static = ${mng_port} }
+      port "http" { static = ${drive_port} }
     }
 
-    task "deleuze-mng" {
+    task "flaubert-drive" {
       driver = "docker"
 
       config {
-        image      = "${ecr_registry}/deleuze-mng:${image_tag}"
+        image      = "${ecr_registry}/flaubert-drive:${image_tag}"
         ports      = ["http"]
         force_pull = true
       }
 
       template {
         data = <<EOF
-{{ with nomadVar "nomad/jobs/deleuze-mng" }}
+{{ with nomadVar "nomad/jobs/flaubert-drive" }}
 {{ range $k, $v := . }}
 {{ $k }}="{{ $v }}"
 {{ end }}
 {{ end }}
-# 💡 Drive サービスの内部プロビジョニング用 URL を追加
-Services__Drive__InternalApiUrl="http://{{ env "attr.unique.network.ip-address" }}:${drive_port}"
 EOF
         destination = "secrets/env"
         env         = true

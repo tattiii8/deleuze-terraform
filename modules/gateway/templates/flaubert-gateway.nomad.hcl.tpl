@@ -1,5 +1,5 @@
-job "deleuze-gateway" {
-  datacenters = ["dc1"]
+job "flaubert-gateway" {
+  datacenters = ["${datacenter}"]
   type        = "service"
 
   group "gateway" {
@@ -7,27 +7,22 @@ job "deleuze-gateway" {
 
     network {
       port "http" {
-        static = 8888
+        static = 8889
         to     = 80
       }
     }
 
-    # 1. Cloudflare Tunnel タスク
     task "cloudflared" {
       driver = "docker"
 
       config {
-        image = "871950640338.dkr.ecr.ap-northeast-1.amazonaws.com/cloudflare/cloudflared:latest"
-        args  = [
-          "tunnel",
-          "--no-autoupdate",
-          "run"
-        ]
+        image = "${ecr_registry}/cloudflare/cloudflared:latest"
+        args  = ["tunnel", "--no-autoupdate", "run"]
       }
 
       template {
         data = <<EOF
-{{ with nomadVar "nomad/jobs/deleuze-gateway" }}
+{{ with nomadVar "nomad/jobs/flaubert-gateway" }}
 TUNNEL_TOKEN="{{ .CLOUDFLARE_TUNNEL_TOKEN }}"
 {{ end }}
 EOF
@@ -41,22 +36,19 @@ EOF
       }
     }
 
-    # 2. Nginx リバースプロキシ タスク
     task "nginx" {
       driver = "docker"
 
       config {
-        image = "871950640338.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:alpine"
+        image = "${ecr_registry}/nginx:alpine"
         ports = ["http"]
 
-        volumes = [
-          "local/default.conf:/etc/nginx/conf.d/default.conf"
-        ]
+        volumes = ["local/default.conf:/etc/nginx/conf.d/default.conf"]
       }
 
       template {
         data = <<EOF
-{{ with nomadVar "nomad/jobs/deleuze-gateway" }}
+{{ with nomadVar "nomad/jobs/flaubert-gateway" }}
 server {
     listen 80;
     server_name _;
@@ -74,21 +66,8 @@ server {
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
 
-    # proxy_pass の末尾スラッシュを削除し、プレフィックスパスを維持してバックエンドへ転送
-    location /api/auth/ {
-        proxy_pass http://{{ .HOST_IP }}:{{ .AUTH_PORT }};
-    }
-
-    location /api/mng/ {
-        proxy_pass http://{{ .HOST_IP }}:{{ .MNG_PORT }};
-    }
-
     location /api/drive/ {
         proxy_pass http://{{ .HOST_IP }}:{{ .DRIVE_PORT }};
-    }
-
-    location /mng/ {
-        proxy_pass http://{{ .HOST_IP }}:{{ .MNG_FRONT_PORT }};
     }
 }
 {{ end }}
